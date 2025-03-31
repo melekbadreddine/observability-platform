@@ -1,0 +1,9 @@
+project_id         = "observability-platform"
+mimir_bucket_name  = "grafana-mimir-metrics-eu"
+cluster_name       = "gke-cluster"
+network            = "gke-vpc-network"
+subnetwork         = "gke-vpc-subnet"
+initial_node_count = 1
+node_count         = 2
+machine_type       = "e2-medium"
+region             = "europe-west6"
