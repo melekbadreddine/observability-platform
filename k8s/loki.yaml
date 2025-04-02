@@ -1,3 +1,4 @@
+# loki-config.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -20,6 +21,8 @@ data:
         final_sleep: 0s
       chunk_idle_period: 5m
       max_transfer_retries: 0
+      wal:
+        dir: /loki/wal
     
     schema_config:
       configs:
@@ -48,6 +51,7 @@ data:
       working_directory: /loki/compactor
       shared_store: filesystem
 ---
+# loki.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
