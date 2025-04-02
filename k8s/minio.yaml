@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: minio-credentials
-  namespace: store-monitoring
+  namespace: observability
 type: Opaque
 data:
   rootuser: bWluaW8=
@@ -12,7 +12,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: minio
-  namespace: store-monitoring
+  namespace: observability
 spec:
   serviceName: minio
   replicas: 1
@@ -76,7 +76,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: minio
-  namespace: store-monitoring
+  namespace: observability
 spec:
   ports:
   - port: 9000
@@ -92,7 +92,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: minio-bucket-creation
-  namespace: store-monitoring
+  namespace: observability
 spec:
   template:
     spec:
@@ -105,7 +105,7 @@ spec:
           echo "Waiting for MinIO to be ready..."
           # Try both service DNS names and add retry logic
           for i in $(seq 1 60); do
-            if nc -z minio 9000 || nc -z minio.store-monitoring.svc.cluster.local 9000; then
+            if nc -z minio 9000 || nc -z minio.observability.svc.cluster.local 9000; then
               echo "MinIO is ready!"
               exit 0
             fi
