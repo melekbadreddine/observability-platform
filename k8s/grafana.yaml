@@ -51,6 +51,8 @@ spec:
       labels:
         app: grafana
     spec:
+      securityContext:  # Add security context
+        fsGroup: 472  # Grafana's default group ID
       containers:
       - name: grafana
         image: grafana/grafana:10.2.0
