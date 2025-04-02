@@ -39,6 +39,8 @@ spec:
       labels:
         app: prometheus
     spec:
+      securityContext:
+        fsGroup: 65534
       containers:
       - name: prometheus
         image: prom/prometheus:v2.49.0
@@ -46,6 +48,7 @@ spec:
         - --config.file=/etc/prometheus/prometheus.yml
         - --storage.tsdb.retention.time=24h
         - --web.enable-lifecycle
+        - --storage.tsdb.path=/prometheus/data
         ports:
         - containerPort: 9090
           name: http
