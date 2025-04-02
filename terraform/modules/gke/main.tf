@@ -5,7 +5,6 @@ resource "google_container_cluster" "gke_cluster" {
   enable_shielded_nodes    = "true"
   remove_default_node_pool = true
   initial_node_count       = 1
-  # Remove the disk_size_gb attribute from here
 
   release_channel {
     channel = "STABLE"
@@ -37,7 +36,6 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = "${var.clusterName}-pool"
   location   = var.region
   cluster    = google_container_cluster.gke_cluster.name
-  node_count = 1
 
   management {
     auto_repair  = true
