@@ -16,29 +16,29 @@ spec:
     spec:
       securityContext:
         fsGroup: 10001
-        runAsUser: 10001
-        runAsGroup: 10001
       containers:
       - name: loki
         image: grafana/loki:2.9.0
         args:
-          - -config.file=/etc/loki/local-config.yaml
+        - "-config.file=/etc/loki/loki-config.yaml"
         ports:
         - containerPort: 3100
         volumeMounts:
         - name: data
           mountPath: /loki
-        - name: config
-          mountPath: /etc/loki
-      volumes:
-      - name: config
-        configMap:
-          name: loki-config
+        # Add volume mount for configuration if using custom config
+        # - name: config
+        #   mountPath: /etc/loki
+      # Uncomment and add volumes section if using a ConfigMap for Loki configuration
+      # volumes:
+      # - name: config
+      #   configMap:
+      #     name: loki-config
   volumeClaimTemplates:
   - metadata:
       name: data
     spec:
-      accessModes: ["ReadWriteOnce"]
+      accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
           storage: 10Gi
