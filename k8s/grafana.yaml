@@ -51,15 +51,20 @@ spec:
       labels:
         app: grafana
     spec:
-      securityContext:  # Add security context
-        fsGroup: 472  # Grafana's default group ID
+      securityContext:
+        fsGroup: 472
       containers:
       - name: grafana
         image: grafana/grafana:10.2.0
+        securityContext:
+          runAsUser: 472
+          runAsGroup: 472
         ports:
         - containerPort: 3000
           name: http
         env:
+        - name: GF_PATHS_PLUGINS
+          value: "/var/lib/grafana/plugins"
         - name: GF_SECURITY_ADMIN_USER
           value: admin
         - name: GF_SECURITY_ADMIN_PASSWORD
@@ -88,6 +93,8 @@ metadata:
   name: grafana
   namespace: observability
 spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
   - port: 3000
     targetPort: http
