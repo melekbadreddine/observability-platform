@@ -1,6 +1,6 @@
 project_id="e-outrider-455515-d2"
-region="europe-west6"
-clusterName="tf-cluster"
+region="europe-west9-a"
+clusterName="gke-cluster"
 diskSize=20
 minNode=0
 maxNode=2

@@ -7,33 +7,32 @@ data:
   datasources.yaml: |
     apiVersion: 1
     datasources:
-    - name: Prometheus
-      type: prometheus
-      url: http://prometheus:9090
-      access: proxy
-      isDefault: true
-    - name: Loki
-      type: loki
-      url: http://loki:3100
-      access: proxy
-      jsonData:
-        derivedFields:
-          - datasourceUid: Tempo
-            matcherRegex: '"traceid":\s*"([a-fA-F0-9]{32})"'
-            name: TraceID
-            url: "$${__value.raw}"
-    - name: Tempo
-      type: tempo
-      url: http://tempo:3200
-      access: proxy
-    - name: Mimir
-      type: prometheus
-      url: http://mimir:9009/prometheus
-      access: proxy
-      jsonData:
-        httpHeaderName1: X-Scope-OrgID
-      secureJsonData:
-        httpHeaderValue1: qim-info
+      - name: Mimir
+        type: prometheus
+        url: http://mimir:9009/prometheus
+        access: proxy
+        uid: mimir
+        jsonData:
+          httpHeaderName1: X-Scope-OrgID
+        secureJsonData:
+          httpHeaderValue1: qim-info
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://loki:3100
+        access: proxy
+        uid: loki
+        jsonData:
+          derivedFields:
+            - datasourceUid: Tempo
+              matcherRegex: '"traceid":\s*"([a-fA-F0-9]{32})"'
+              name: TraceID
+              url: "$${__value.raw}"
+      - name: Tempo
+        type: tempo
+        url: http://tempo:3200
+        access: proxy
+        uid: tempo
 ---
 apiVersion: apps/v1
 kind: StatefulSet

@@ -2,8 +2,9 @@ resource "google_container_cluster" "gke_cluster" {
   name     = var.clusterName
   location = var.region
 
-  enable_shielded_nodes    = "true"
+  enable_shielded_nodes    = "true" 
   remove_default_node_pool = true
+  deletion_protection = false
   initial_node_count       = 1
 
   release_channel {
@@ -23,8 +24,8 @@ resource "google_container_cluster" "gke_cluster" {
   }
 
   timeouts {
-    create = "20m"
-    update = "20m"
+    create = "30m"
+    update = "30m"
   }
 
   lifecycle {
@@ -56,6 +57,7 @@ resource "google_container_node_pool" "primary_nodes" {
     preemptible  = true
     machine_type = var.machineType
     disk_size_gb = var.diskSize
+    disk_type    = "pd-standard"
 
     oauth_scopes = [
       "https://www.googleapis.com/auth/compute",
